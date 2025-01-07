@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.devsuperior</groupId>
-	<artifactId>hr-playroll</artifactId>
+	<artifactId>hr-payroll</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>hr-playroll</name>
-	<description>Playroll Microservice</description>
+	<name>hr-payroll</name>
+	<description>Payroll Microservice</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
