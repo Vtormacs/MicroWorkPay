@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class WorkerService {
@@ -15,8 +16,12 @@ public class WorkerService {
     @Autowired
     private WorkerRepository workerRepository;
 
+    private final WorkerMapper workerMapper = new WorkerMapper();
+
     public List<WorkerInfoDTO> findAll() {
         List<Worker> workers = workerRepository.findAll();
-        return WorkerMapper.INSTANCE.workerListToWorkerInfoDTOList(workers);
+        return workers.stream()
+                .map(workerMapper::convertToDTO)
+                .collect(Collectors.toList());
     }
 }
