@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,5 +24,10 @@ public class WorkerService {
         return workers.stream()
                 .map(workerMapper::convertToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public WorkerInfoDTO findById(UUID id) {
+        Worker worker = workerRepository.findById(id).orElseThrow();
+        return workerMapper.convertToDTO(worker);
     }
 }
