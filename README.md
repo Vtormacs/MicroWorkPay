@@ -1,6 +1,6 @@
 ## Visão Geral do Projeto
 
-![Visão do Projeto](./docs/img/visao-projeto.png)
+![Visão do Projeto](/img/img.png)
 
 MicroWorkPay é uma aplicação baseada em arquitetura de microsserviços, desenvolvida em Java com Spring Boot e Java Cloud. O projeto tem como objetivo criar uma solução eficiente para pagamentos e gestão de trabalho em microescala.
 
