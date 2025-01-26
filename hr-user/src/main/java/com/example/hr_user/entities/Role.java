@@ -1,4 +1,4 @@
-package com.MicroWorkPay.hr_worket.entities;
+package com.example.hr_user.entities;
 
 import lombok.*;
 
