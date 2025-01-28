@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,9 +23,18 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getWorkerForId(@PathVariable UUID id) {
+    public ResponseEntity<User> getUserForId(@PathVariable UUID id) {
         try {
             return ResponseEntity.ok(userService.findById(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<User> getUserForEmail(@RequestParam String email) {
+        try {
+            return ResponseEntity.ok(userService.findByEmail(email));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
