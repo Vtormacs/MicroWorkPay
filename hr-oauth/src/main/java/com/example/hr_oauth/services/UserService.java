@@ -19,17 +19,13 @@ public class UserService implements UserDetailsService {
     private UserFeignClient userFeignClient;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            User user = userFeignClient.getUserForEmail(username).getBody();
-            if (user == null) {
-                logger.error("Email not found: " + username);
-                throw new UsernameNotFoundException("Email not found");
-            }
-            logger.error("Email found: " + username);
-            return user;
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Email not found", e);
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userFeignClient.getUserForEmail(username).getBody();
+        if (user == null) {
+            logger.error("Email not found: " + username);
+            throw new UsernameNotFoundException("Email not found");
         }
+        logger.info("Email found: " + username);
+        return user;
     }
 }
