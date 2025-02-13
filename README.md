@@ -148,27 +148,3 @@ POST /payment/{workerId}
 > ```
 > Authorization: Bearer {jwt_token}
 > ```
-
----
-
-## **Estrutura de Pastas**
-
-Cada subdiretório do repositório é um microsserviço independente:
-
-```
-microworkpay/
-├── hr-api-gateway-zuul/
-├── hr-worker/
-├── hr-payroll/
-├── hr-user/
-├── hr-oauth/
-├── hr-config-server/
-└── README.md
-```
-
-## **Roadmap**
-
-- Adicionar monitoramento com **Spring Boot Actuator**.
-- Migrar a API Gateway de Zuul para **Spring Cloud Gateway**.
-- Implementar testes automatizados com **JUnit**.
-- Adicionar suporte à mensageria com **Apache Kafka**.
