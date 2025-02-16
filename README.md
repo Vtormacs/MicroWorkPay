@@ -32,7 +32,24 @@ docker network create hr-net
 ## Postgresql
 ```
 docker pull postgres:16-alpine
-docker run postgres:16-alpine -p 5432:5432 --name hr-worker-pg16 --network hr-net -e POSTGRES_PASSWORD=root -e POSTGRES_DB=hr-worker
+
+docker run -d \
+  --name hr-worker-pg16 \
+  --network hr-net \
+  -e POSTGRES_PASSWORD=root \
+  -e POSTGRES_DB=hr-worker \
+  -p 5432:5432 \
+  postgres:16-alpine
+
+docker run -d \
+  --name hr-user-pg16 \
+  --network hr-net \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=root \
+  -e POSTGRES_DB=hr-user \
+  -p 5433:5432 \
+  postgres:16-alpine
+
 ```
 ## hr-config-server
 ```
