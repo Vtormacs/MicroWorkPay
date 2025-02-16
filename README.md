@@ -32,7 +32,7 @@ docker network create hr-net
 ## Postgresql
 ```
 docker pull postgres:12-alpine
-docker run postgres:12-alpine -p 5432:5432 --name hr-worker-pg12 --network hr-net -e POSTGRES_PASSWORD=1234567 -e POSTGRES_DB=db_hr_worker
+docker run postgres:12-alpine -p 5432:5432 --name hr-worker-pg12 --network hr-net -e POSTGRES_PASSWORD=root -e POSTGRES_DB=hr-worker
 ```
 ## hr-config-server
 ```
@@ -45,7 +45,7 @@ ENTRYPOINT ["java","-jar","/hr-config-server.jar"]
 ```
 mvnw clean package
 docker build -t hr-config-server:v1 .
-docker run hr-config-server:v1 -p 8888:8888 --name hr-config-server --network hr-net -e GITHUB_USER=acenelio -e GITHUB_PASS=
+docker run hr-config-server:v1 -p 8888:8888 --name hr-config-server --network hr-net -e GITHUB_USER=Vtormacs -e GITHUB_PASS=
 ```
 ## hr-eureka-server
 ```
