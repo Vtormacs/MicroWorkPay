@@ -149,8 +149,8 @@ POST /payment/{workerId}
 > Authorization: Bearer {jwt_token}
 > ```
 
-
 # Criando e testando containers Docker
+![Visão geral do containers docker](/img/docker.png)
 ## Comandos Docker
 #### Criar uma rede Docker
 ```
