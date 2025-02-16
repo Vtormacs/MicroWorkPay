@@ -2,7 +2,6 @@
 
 ![Visão do Projeto](/img/img.png)
 
-
 # MicroWorkPay - Sistema de Gestão de Pagamentos e Recursos Humanos
 
 **MicroWorkPay** é um sistema baseado em arquitetura de microsserviços, projetado para gerenciar trabalhadores, usuários, folhas de pagamento e controle de autenticação/segurança. Ele utiliza tecnologias modernas como Spring Boot, Spring Cloud, OAuth2 e JWT, proporcionando uma solução simples, escalável e modular.
@@ -45,7 +44,7 @@ O sistema utiliza uma arquitetura de **microsserviços**, onde cada serviço é 
         - Validação inicial de segurança (autenticação e tokens).
         - Exposição única dos serviços para o cliente.
 
-- #### **hr-config-server** *(Opcional, se implementado)*
+- #### **hr-config-server**
     - Centraliza as configurações de todos os microsserviços.
     - Use o **Spring Cloud Config** para alterar configurações dos serviços sem necessidade de reiniciá-los.
 
@@ -89,32 +88,22 @@ O sistema utiliza uma arquitetura de **microsserviços**, onde cada serviço é 
 1. **Clone o repositório principal:**
 ```shell script
 git clone https://github.com/seu-usuario/microworkpay.git
-   cd microworkpay
+cd microworkpay
 ```
 
-2. **Configure o banco de dados:**
-    - Crie os bancos de dados necessários para os microsserviços (`hr-worker`, `hr-user`, etc.).
-    - Edite o arquivo de configuração para cada microsserviço, ajustando o acesso ao banco:
-        - `application.properties` ou `application.yml`.
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/hr-worker
-       spring.datasource.username=usuario
-       spring.datasource.password=senha
-```
-
-3. **Configuração de Segurança (JWT):**
+2. **Configuração de Segurança (JWT):**
     - Atualize o segredo utilizado para assinar os tokens, adicionado no `hr-oauth` e `hr-api-gateway-zuul`:
 ```properties
 jwt.secret=SUA_SECRET_KEY
 ```
 
-4. **Compile os serviços:**
+3. **Compile os serviços:**
    Execute o comando Maven em cada serviço para gerar os artefatos:
 ```shell script
 mvn clean install
 ```
 
-5. **Inicie os serviços:**
+4. **Inicie os serviços:**
     - Certifique-se de que o **hr-config-server** está rodando, depois inicie os outros serviços em sua ordem.
     - Cada serviço pode ser iniciado executando:
 ```shell script
@@ -151,32 +140,7 @@ POST /payment/{workerId}
 
 # Criando e testando containers Docker
 ![Visão geral do containers docker](/img/docker.png)
-## Comandos Docker
-#### Criar uma rede Docker
-```
-docker network create <nome-da-rede>
-```
-#### Baixar imagem do Dockerhub
-```
-docker pull <nome-da-imagem:tag>
-```
-#### Ver imagens
-```
-docker images
-```
-#### Rodar um container de uma imagem
-```
-docker run -p <porta-externa>:<porta-interna> --name <nome-do-container> --network <nome-da-rede> <nome-da-imagem:tag> 
-```
-#### Listar containers
-```
-docker ps
-docker ps -a
-```
-#### Acompanhar logs do container em execução
-```
-docker logs -f <container-id>
-```
+
 ## Criar rede docker para sistema hr
 ```
 docker network create hr-net
@@ -201,7 +165,6 @@ docker run -d \
   -e POSTGRES_DB=hr-user \
   -p 5433:5432 \
   postgres:16-alpine
-
 ```
 ## hr-config-server
 ```
@@ -210,11 +173,10 @@ VOLUME /tmp
 EXPOSE 8888
 ADD ./target/hr-config-server-0.0.1-SNAPSHOT.jar hr-config-server.jar
 ENTRYPOINT ["java","-jar","/hr-config-server.jar"]
-``` 
+```
 ```
 mvnw clean package
 docker build -t hr-config-server:v1 .
-docker run hr-config-server:v1 -p 8888:8888 --name hr-config-server --network hr-net -e GITHUB_USER=Vtormacs -e GITHUB_PASS=
 ```
 ## hr-eureka-server
 ```
@@ -223,7 +185,7 @@ VOLUME /tmp
 EXPOSE 8761
 ADD ./target/hr-eureka-server-0.0.1-SNAPSHOT.jar hr-eureka-server.jar
 ENTRYPOINT ["java","-jar","/hr-eureka-server.jar"]
-``` 
+```
 ```
 mvnw clean package
 docker build -t hr-eureka-server:v1 .
@@ -233,9 +195,8 @@ docker run hr-eureka-server:v1 -p 8761:8761 --name hr-eureka-server --network hr
 ```
 FROM openjdk:11
 VOLUME /tmp
-ADD ./target/hr-worker-0.0.1-SNAPSHOT.jar hr-worker.jar
 ENTRYPOINT ["java","-jar","/hr-worker.jar"]
-``` 
+```
 ```
 mvnw clean package -DskipTests
 docker build -t hr-worker:v1 .
