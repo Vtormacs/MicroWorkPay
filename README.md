@@ -59,9 +59,8 @@ O sistema utiliza uma arquitetura de **microsserviços**, onde cada serviço é 
 - **Spring Cloud Zuul**: Roteamento e API Gateway.
 - **Lombok**: Simplifica código, reduzindo boilerplate.
 - **Banco de Dados**:
-    - **MySQL/PostgreSQL** para armazenamento relacional.
-    - **Redis** (opcional): Cache distribuído.
-- **Docker** *(opcional)*: Para conteinerizar os serviços.
+    - **PostgreSQL** para armazenamento relacional.
+- **Docker**: Para conteinerizar os serviços.
 
 ---
 
@@ -77,38 +76,11 @@ O sistema utiliza uma arquitetura de **microsserviços**, onde cada serviço é 
 ## **Configuração Local**
 
 ### **Pré-requisitos**
-- Java 11+
+- Java 11
 - Maven
-- MySQL ou PostgreSQL
-- Docker *(opcional para containers)*
+- PostgreSQL
+- Docker
 - Git
-
-### **Passos para configurar o projeto:**
-
-1. **Clone o repositório principal:**
-```shell script
-git clone https://github.com/seu-usuario/microworkpay.git
-cd microworkpay
-```
-
-2. **Configuração de Segurança (JWT):**
-    - Atualize o segredo utilizado para assinar os tokens, adicionado no `hr-oauth` e `hr-api-gateway-zuul`:
-```properties
-jwt.secret=SUA_SECRET_KEY
-```
-
-3. **Compile os serviços:**
-   Execute o comando Maven em cada serviço para gerar os artefatos:
-```shell script
-mvn clean install
-```
-
-4. **Inicie os serviços:**
-    - Certifique-se de que o **hr-config-server** está rodando, depois inicie os outros serviços em sua ordem.
-    - Cada serviço pode ser iniciado executando:
-```shell script
-java -jar target/nome-do-servico.jar
-```
 
 ---
 
@@ -119,7 +91,7 @@ java -jar target/nome-do-servico.jar
 - **Autenticação (hr-oauth):**
 ```
 POST /oauth/token
-  Body: { "username": "admin", "password": "admin" }
+Body: { "username": "admin", "password": "admin" }
 ```
 
 ### **Endpoints Protegidos**
@@ -138,6 +110,8 @@ POST /payment/{workerId}
 > Authorization: Bearer {jwt_token}
 > ```
 
+---
+
 # Criando e testando containers Docker
 ![Visão geral do containers docker](/img/docker.png)
 
@@ -145,6 +119,7 @@ POST /payment/{workerId}
 ```
 docker network create hr-net
 ```
+
 ## Postgresql
 ```
 docker pull postgres:16-alpine
@@ -166,6 +141,7 @@ docker run -d \
   -p 5433:5432 \
   postgres:16-alpine
 ```
+
 ## hr-config-server
 ```
 FROM openjdk:11
@@ -177,7 +153,9 @@ ENTRYPOINT ["java","-jar","/hr-config-server.jar"]
 ```
 mvnw clean package
 docker build -t hr-config-server:v1 .
+docker run -p 8888:8888 --name hr-config-server --network hr-net -e GITHUB_USER=Vtormacs -e GITHUB_PASS= hr-config-server:v1
 ```
+
 ## hr-eureka-server
 ```
 FROM openjdk:11
@@ -189,8 +167,9 @@ ENTRYPOINT ["java","-jar","/hr-eureka-server.jar"]
 ```
 mvnw clean package
 docker build -t hr-eureka-server:v1 .
-docker run hr-eureka-server:v1 -p 8761:8761 --name hr-eureka-server --network hr-net
+docker run -p 8761:8761 --name hr-eureka-server --network hr-net hr-eureka-server:v1
 ```
+
 ## hr-worker
 ```
 FROM openjdk:11
@@ -200,5 +179,49 @@ ENTRYPOINT ["java","-jar","/hr-worker.jar"]
 ```
 mvnw clean package -DskipTests
 docker build -t hr-worker:v1 .
-docker run hr-worker:v1 -P --network hr-net
+docker run -P --network hr-net hr-worker:v1
 ```
+
+---
+
+## **Configuração do Repositório de Configurações**
+
+O projeto utiliza o repositório [MS-MicroWorkPay-Configs](https://github.com/Vtormacs/MS-MicroWorkPay-Configs) para armazenar as configurações dos microsserviços. O `hr-config-server` se conecta a esse repositório para carregar as configurações necessárias, como credenciais de banco de dados e outras propriedades.
+
+Certifique-se de que o repositório de configurações esteja configurado corretamente e acessível para o `hr-config-server`.
+
+---
+
+## **Executando o Projeto**
+
+1. Clone o repositório do projeto:
+   ```
+   git clone https://github.com/seu-usuario/MicroWorkPay.git
+   ```
+
+2. Navegue até o diretório do projeto:
+   ```
+   cd MicroWorkPay
+   ```
+
+3. Execute os comandos Docker para criar e iniciar os containers dos bancos de dados (PostgreSQL) e dos microsserviços.
+
+4. Utilize o `mvnw clean package` para empacotar cada microsserviço e, em seguida, crie as imagens Docker com os comandos fornecidos acima.
+
+5. Inicie os microsserviços na ordem correta:
+    - `hr-config-server`
+    - `hr-eureka-server`
+    - `hr-worker`
+    - `hr-user`
+    - `hr-oauth`
+    - `hr-api-gateway-zuul`
+    - `hr-payroll`
+
+6. Acesse os serviços através do API Gateway (`hr-api-gateway-zuul`) e utilize os endpoints conforme necessário.
+
+---
+
+## **Observações**
+
+- O Flyway é utilizado para migrações de banco de dados, garantindo que as tabelas sejam criadas e populadas automaticamente ao iniciar os microsserviços.
+- Certifique-se de que as portas necessárias estejam disponíveis e que os containers Docker estejam corretamente conectados à rede `hr-net`.
