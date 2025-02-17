@@ -1,0 +1,413 @@
+{
+	"info": {
+		"_postman_id": "4ffb84ee-562a-4370-b568-8176c393118a",
+		"name": "MicroWorkPay",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37338470",
+		"_collection_link": "https://seila8.postman.co/workspace/seila-Workspace~012538be-2e76-4623-8f42-cc1bb5c8b1ac/collection/37338470-4ffb84ee-562a-4370-b568-8176c393118a?action=share&source=collection_link&creator=37338470"
+	},
+	"item": [
+		{
+			"name": "hr-worker",
+			"item": [
+				{
+					"name": "listar workers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/hr-worker/api/workers",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"hr-worker",
+								"api",
+								"workers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "procurar por id worker",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/hr-worker/api/workers/0b479ea1-c578-41fc-b2f2-76280e7103de",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"hr-worker",
+								"api",
+								"workers",
+								"0b479ea1-c578-41fc-b2f2-76280e7103de"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show worker configs on console",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/hr-worker/api/workers/configs",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"hr-worker",
+								"api",
+								"workers",
+								"configs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actuator refresh",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/hr-worker/actuator/refresh",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"hr-worker",
+								"actuator",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "hr-user",
+			"item": [
+				{
+					"name": "procurar por id user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/hr-user/api/users/11111111-1111-1111-1111-111111111111",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"hr-user",
+								"api",
+								"users",
+								"11111111-1111-1111-1111-111111111111"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "procurar por email user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/hr-user/api/users/search?email=leia@gmail.com",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"hr-user",
+								"api",
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "leia@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "hr-oauth",
+			"item": [
+				{
+					"name": "procurar por email user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/hr-oauth/api/users/search?email=leia@gmail.com",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"hr-oauth",
+								"api",
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "leia@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code >= 200 && responseCode.code < 300) {\r",
+									"    var json = JSON.parse(responseBody);\r",
+									"    postman.setEnvironmentVariable('token', json.access_token);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{client-secret}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{client-name}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api-gateway}}/hr-oauth/oauth/token",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"hr-oauth",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "hr-payroll",
+			"item": [
+				{
+					"name": "get payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-gateway}}/hr-payroll/api/payments/0b479ea1-c578-41fc-b2f2-76280e7103de/days/10",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"path": [
+								"hr-payroll",
+								"api",
+								"payments",
+								"0b479ea1-c578-41fc-b2f2-76280e7103de",
+								"days",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "hr-config-server",
+			"item": [
+				{
+					"name": "hr-worker config default profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{config-host}}/hr-worker/default",
+							"host": [
+								"{{config-host}}"
+							],
+							"path": [
+								"hr-worker",
+								"default"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hr-worker config test profile Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{config-host}}/hr-worker/test",
+							"host": [
+								"{{config-host}}"
+							],
+							"path": [
+								"hr-worker",
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
