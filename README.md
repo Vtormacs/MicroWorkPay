@@ -116,6 +116,22 @@ O sistema segue uma arquitetura de **microsserviços**, onde cada serviço é re
 
 ---
 
+## Importação no Postman
+
+Para facilitar os testes da aplicação, há arquivos disponíveis para importação no **Postman**:
+
+📂 Arquivos disponíveis:
+- `postman/MicroWorkPay.postman_collection.json` → Contém todos os endpoints da API.
+- `postman/MicroWorkPay.postman_environment.json` → Contém variáveis para facilitar os testes.
+
+### **Passos para importar no Postman:**
+1. Abra o **Postman**.
+2. Vá para **File → Import**.
+3. Selecione os arquivos `.json` mencionados acima.
+4. Configure o ambiente importado para os testes.
+
+---
+
 ## Endpoints Disponíveis
 
 ### **Endpoints Públicos**
